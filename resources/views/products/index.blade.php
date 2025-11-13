@@ -21,7 +21,7 @@
 <!-- Header -->
 <header class="bg-gradient-to-r from-blue-600 to-indigo-700 shadow-lg text-white">
     <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold tracking-wide">Laravel CRUD</h1>
+        <h1 class="text-2xl font-bold tracking-wide">CRUD</h1>
         <button onclick="openModal('createModal')"
             class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg font-medium transition">
             + Add Product
