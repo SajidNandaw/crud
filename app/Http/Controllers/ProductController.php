@@ -9,35 +9,61 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::latest()->paginate(10);
+        $products = Product::latest()->paginate(5);
         return view('products.index', compact('products'));
+    }
+
+    public function create()
+    {
+        //
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:2',
-            'details' => 'required|min:3'
+            'name' => 'required',
+            'details' => 'required',
         ]);
 
-        Product::create($request->all());
-        return redirect()->route('products.index')->with('success', 'Product created successfully!');
+        Product::create($request->only('name','details'));
+
+        return redirect()->route('products.index')->with('success', 'Product added successfully.');
     }
 
-    public function update(Request $request, Product $product)
+    public function show(string $id)
+    {
+        $product = Product::findOrFail($id);
+        return view('products.show', compact('product'));
+    }
+
+    public function edit(string $id)
+    {
+        //
+    }
+
+    public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|min:2',
-            'details' => 'required|min:3'
+            'name' => 'required',
+            'details' => 'required',
         ]);
 
-        $product->update($request->all());
-        return redirect()->route('products.index')->with('success', 'Product updated successfully!');
+        $product = Product::findOrFail($id);
+        $product->update($request->only('name','details'));
+
+        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
-    public function destroy(Product $product)
+    public function destroy(string $id)
     {
-        $product->delete();
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
+        Product::findOrFail($id)->delete();
+        return redirect()->route('products.index')->with('success', 'Product deleted.');
+    }
+
+    // 🔥 New method: View All Products (tanpa edit/delete)
+    public function viewAll()
+    {
+        $products = Product::all();
+        return view('products.viewall', compact('products'));
     }
 }
